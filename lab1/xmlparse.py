@@ -49,6 +49,28 @@ if b_info_match:
     target.write(b_info_match[2])
     target.write("</author>\n")
 
+#months   = r"(?:January|February|March|April|May|June|July|August|September|October|November|December)[s ]*"
+#days     = r"(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)[s ]*"
+#pronouns = r"(?:He |Him|She|Her|My )[ ]*"
+
+# This finds all given names, which seems to be the only way to separate Zenobia and Theodore as names
+# given_names = r"(?<=\, |[a-z] |[a-z]\n)(?:(?:Mrs\.|Mr\.|Miss|Dr\.) *)?(?:[A-Z][a-z]+ *)+\b"
+given_names = r"(?:Mrs\.|Mr\.|Miss|Dr\.)(?: |\n)*(?:[A-Z][a-z]+ *)+\b" 
+names = re.findall(given_names, data)
+names = set(names)
+
+if names:
+    target.write("<names>\n")
+    for n in names:
+        #n = re.sub(months,   '', n)
+        #n = re.sub(days,     '', n)
+        #n = re.sub(pronouns, '', n)
+        #if n != "":
+        n = re.sub('\n', ' ', n)
+        target.write(n)
+        target.write("\n")
+    target.write("</names>")
+
 # Handle chapters and paragraphs next
 # Note that titles are "exceptions" and get <chaptertitle> not <paragraph> tag
 for x in paragraphs[3:]:
