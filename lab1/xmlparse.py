@@ -12,15 +12,32 @@ data = source.read()
 
 target.write("<book>\n")
 
-chaptertitle = r"[I|V|X]+\. [A-Z '-]{2,}"
+# This assumes future books follow the same title/author format
+# Alternatively could read the first few lines
+b_info = r"[A-Z].*\n\nby\n\n[A-Z].*"
 
-match = re.findall(chaptertitle, data)
+# Assumes chapter names are labeled using Roman numerals
+ch_title  = r"[I|V|X]+\. [A-Z '-]{2,}"
 
-if match:
-    for x in match:
+b_info_match   = re.search(b_info, data)
+ch_title_match = re.findall(ch_title, data)
+
+if b_info_match:
+    b_info_match = b_info_match[0].split('\n\n')
+    target.write("<booktitle>")
+    target.write(b_info_match[0])
+    target.write("</booktitle>\n")
+    target.write("<author>")
+    target.write(b_info_match[2])
+    target.write("</author>\n")
+
+if ch_title_match:
+    for x in ch_title_match:
+        target.write("<chapter>\n")
         target.write("<chaptertitle>")
         target.write("".join(x))
         target.write("</chaptertitle>\n")
+        target.write("</chapter>\n")
 
 
 
