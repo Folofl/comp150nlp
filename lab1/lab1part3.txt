@@ -1,0 +1,32 @@
+Assignment: Lab1
+By:         Alena Borisenko 
+Created:    September 18th, 2017
+Submitted:  September 20th, 2017
+===============================================================================
+
+For part 3, I added a new <propernouns> tag/section at the top of the xml file.
+The tag contains all names, locations and other proper nouns found in the text.
+
+I tried to avoid incorrectly tagging capitalized words that are not proper 
+nouns (first word of a sentence, etc) and cleaned up the resulting list by
+removing months, days of the week and pronouns (boring cases).
+
+Some uninteresting words still slipped through ('New', maybe from New England
+and 'Sat' from typo of 'sat', etc), but I got a pretty good list of characters
+and locations anyway. If I was getting ready for some sort of an in-class
+discussion about the book in an English class I would probably look up the
+character list online, and with this processing step it is not necessary.
+
+Apparently the name 'Michael Scott' appears in the text. Unsurprisingly, it
+was not THE Michael Scott, but it was a fun discovery.
+
+
+I was trying to figure out a clever use of stemming/lemmatization, but could
+not come up with a useful application. Maybe I spent too much doing stupidly
+complicated regex matching, but it seems like the Text Analysis Online samples
+didn't really provide a new way to look up words of interest. Also, the 
+lemmatizer didn't make as many synonym replacements as I expected (like the
+car -> automobile example from class), so I don't know what to do with it.
+
+The POS Tagging seemed more interesting as a way to look for fancy adjectives
+but the amount of results was so overwhelming that it didn't seem useful.
