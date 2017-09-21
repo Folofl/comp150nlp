@@ -5,6 +5,23 @@
 
 import re
 
+################################################################
+# RegEx used 
+################################################################
+# Book Info Template.     (Assumed based on book format)
+b_info    = r"[A-Z].*\n\nby\n\n[A-Z].*"
+# Chapter Title Template. (Assumed to use Roman numerals)
+ch_title  = r"[I|V|X]+\. [A-Z '-]{2,}"
+# Proper Noun Template.   (Allows multiple words and honorifics)
+prop_nouns = r"(?<=\, |[a-z] |[a-z]\n)(?:(?:Mrs\.|Mr\.|Miss|Dr\.) *)?(?:[A-Z][a-z]+(?: *[A-Z][a-z]+)*)+"
+# Capitalized words to be ignored later.
+months   = r"(?:January|February|March|April|\bMay\b|June|July|August|September|October|November|December)[s ]*"
+days     = r"(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)[s ]*"
+pronouns = r"(?:\bHe\b|\bHim\b|\bHis\b|\bShe\b|\bHer\b|\bMy\b)"
+################################################################
+
+
+# Get the source and target files ready
 source = open("Blithedale_Romance.txt", "r")
 target = open("Blithedale_Romance.xml", "w")
 
@@ -25,14 +42,6 @@ data = re.sub(' \"', ' <quote>', data)
     # Finds things in quotation marks, but returns only the content
     # quoteless = r"(?<=\")[^ \n][^\"]+[^ ](?=\")"
 
-# Split the data into paragraphs
-paragraphs = re.split(r"\n\n", data)
-
-# Assumes future books follow the same title/author format
-b_info    = r"[A-Z].*\n\nby\n\n[A-Z].*"
-
-# Assumes chapter names are labeled using Roman numerals
-ch_title  = r"[I|V|X]+\. [A-Z '-]{2,}"
 
 # Open the book tag
 target.write("<book>\n")
@@ -49,27 +58,26 @@ if b_info_match:
     target.write(b_info_match[2])
     target.write("</author>\n")
 
-#months   = r"(?:January|February|March|April|May|June|July|August|September|October|November|December)[s ]*"
-#days     = r"(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)[s ]*"
-#pronouns = r"(?:He |Him|She|Her|My )[ ]*"
+# Look for all capitalized nouns
+p_nouns = re.findall(prop_nouns, data)
+p_nouns = set(p_nouns)
+# Write to file if found
+if p_nouns:
+    target.write("<propernouns>\n")
+    for n in p_nouns:
+        # Remove the boring ones
+        n = re.sub(months,   '', n)
+        n = re.sub(days,     '', n)
+        n = re.sub(pronouns, '', n)
+        if n != "":
+            n = re.sub('\n', ' ', n)
+            target.write(n)
+            target.write(", ")
+    target.write("\n</propernouns>")
 
-# This finds all given names, which seems to be the only way to separate Zenobia and Theodore as names
-# given_names = r"(?<=\, |[a-z] |[a-z]\n)(?:(?:Mrs\.|Mr\.|Miss|Dr\.) *)?(?:[A-Z][a-z]+ *)+\b"
-given_names = r"(?:Mrs\.|Mr\.|Miss|Dr\.)(?: |\n)*(?:[A-Z][a-z]+ *)+\b" 
-names = re.findall(given_names, data)
-names = set(names)
 
-if names:
-    target.write("<names>\n")
-    for n in names:
-        #n = re.sub(months,   '', n)
-        #n = re.sub(days,     '', n)
-        #n = re.sub(pronouns, '', n)
-        #if n != "":
-        n = re.sub('\n', ' ', n)
-        target.write(n)
-        target.write("\n")
-    target.write("</names>")
+# Split the data into paragraphs
+paragraphs = re.split(r"\n\n", data)
 
 # Handle chapters and paragraphs next
 # Note that titles are "exceptions" and get <chaptertitle> not <paragraph> tag
@@ -100,5 +108,6 @@ for x in paragraphs[3:]:
 target.write("</chapter>")
 target.write("\n</book>")
 
+# Close files
 source.close()
 target.close()
