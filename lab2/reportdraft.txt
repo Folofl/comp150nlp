@@ -1,0 +1,11 @@
+Assignment: Lab2
+By:         Alena Borisenko 
+Created:    September 24th, 2017
+Submitted:  September 27th, 2017
+===============================================================================
+
+Authors chosen:
+
+Analytics performed:
+
+Lunchmate recommendation:
