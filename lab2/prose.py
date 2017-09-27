@@ -16,6 +16,7 @@ melville  = gutenberg.sents('melville-moby_dick.txt')
 
 a_unigram = {}
 a_bigram  = {}
+a_trigram = {}
 
 e_unigram = {}
 e_bigram  = {}
@@ -67,6 +68,28 @@ print(a_bigram[6])
 print(a_bigram[7])
 print(a_bigram[8])
 print(a_bigram[9])
+print("----------")
+
+for j in austen:
+    for i in range(2, len(j)):
+        three_words = j[i - 2] + " " + j[i - 1] + " " + j[i]
+        if three_words in a_trigram:
+            a_trigram[three_words] += 1
+        else:
+            a_trigram[three_words] = 1
+
+a_trigram = sorted(a_trigram.items(), key=operator.itemgetter(1), reverse=True)
+
+print(a_trigram[0])
+print(a_trigram[1])
+print(a_trigram[2])
+print(a_trigram[3])
+print(a_trigram[4])
+print(a_trigram[5])
+print(a_trigram[6])
+print(a_trigram[7])
+print(a_trigram[8])
+print(a_trigram[9])
 print("----------")
 
 print("-EDGEWORTH")
