@@ -6,7 +6,12 @@
 import operator
 import nltk
 import re
-nltk.download('punkt')
+
+try:
+    nltk.data.find('tokenizers/punkt')
+except LookupError:
+    nltk.download('punkt')
+
 from nltk.corpus import gutenberg
 gutenberg.fileids()
 ['austen-emma.txt', 'edgeworth-parents.txt', 'melville-moby_dick.txt']
@@ -17,12 +22,12 @@ def remove_bad_words(target_list):
 
 def make_ngram(n, source_sents):
     ngram = {}
-    for j in source_sents:
-        for i in range(n - 1, len(j)):
+    for sent in source_sents:
+        for word_i in range(n - 1, len(sent)):
             key = ""
-            for k in range (i - (n - 1), i):
-                key += j[k] + " "
-            key += j[i]
+            for k in range (word_i - (n - 1), word_i):
+                key += sent[k] + " "
+            key += sent[word_i]
             if key in ngram:
                 ngram[key] += 1
             else:
@@ -30,71 +35,93 @@ def make_ngram(n, source_sents):
     ngram = sorted(ngram.items(), key=operator.itemgetter(1), reverse=True)
     return ngram
 
-austen_sents    = gutenberg.sents('austen-emma.txt')
-edgeworth_sents = gutenberg.sents('edgeworth-parents.txt')
-melville_sents  = gutenberg.sents('melville-moby_dick.txt')
+a1_sents = gutenberg.sents('austen-emma.txt')
+a2_sents = gutenberg.sents('edgeworth-parents.txt')
+a3_sents = gutenberg.sents('melville-moby_dick.txt')
 
-austen    = []
-edgeworth = []
-melville  = []
+a1 = []
+a1_valid_word_count = 0;
+a2 = []
+a2_valid_word_count = 0;
+a3 = []
+a3_valid_word_count = 0;
 
-for j in austen_sents:
-    austen.append(remove_bad_words(j))
-for j in edgeworth_sents:
-    edgeworth.append(remove_bad_words(j))
-for j in melville_sents:
-    melville.append(remove_bad_words(j))
+for sent in a1_sents:
+    valid_sent = remove_bad_words(sent)
+    a1.append(valid_sent)
+    a1_valid_word_count += len(valid_sent)
+for sent in a2_sents:
+    valid_sent = remove_bad_words(sent)
+    a2.append(valid_sent)
+    a2_valid_word_count += len(valid_sent)
+for sent in a3_sents:
+    valid_sent = remove_bad_words(sent)
+    a3.append(valid_sent)
+    a3_valid_word_count += len(valid_sent)
 
 
-print("----AUSTEN")
+print("----a1")
+print(a1_valid_word_count)
 
-a_unigram = make_ngram(1, austen)
+a1_unigram = make_ngram(1, a1)
 for i in range (0, 10):
-    print(a_unigram[i])
+    print(a1_unigram[i])
 print("----------")
 
-a_bigram  = make_ngram(2, austen)
+a1_bigram  = make_ngram(2, a1)
 for i in range (0, 10):
-    print(a_bigram[i])
+    print(a1_bigram[i])
 print("----------")
 
-a_trigram = make_ngram(3, austen)
+a1_trigram = make_ngram(3, a1)
 for i in range (0, 10):
-    print(a_trigram[i])
+    print(a1_trigram[i])
 print("----------")
 
-
-print("-EDGEWORTH")
-
-e_unigram = make_ngram(1, edgeworth)
+a1_trigram = make_ngram(3, a1)
 for i in range (0, 10):
-    print(e_unigram[i])
+    print(a1_trigram[i])
 print("----------")
 
-e_bigram  = make_ngram(2, edgeworth)
+a1_tetragram = make_ngram(4, a1)
 for i in range (0, 10):
-    print(e_bigram[i])
-print("----------")
-
-e_trigram = make_ngram(3, edgeworth)
-for i in range (0, 10):
-    print(e_trigram[i])
+    print(a1_tetragram[i])
 print("----------")
 
 
-print("--MELVILLE")
+print("-a2")
+print(a2_valid_word_count)
 
-m_unigram = make_ngram(1, melville)
+a2_unigram = make_ngram(1, a2)
 for i in range (0, 10):
-    print(m_unigram[i])
+    print(a2_unigram[i])
 print("----------")
 
-m_bigram  = make_ngram(2, melville)
+a2_bigram  = make_ngram(2, a2)
 for i in range (0, 10):
-    print(m_bigram[i])
+    print(a2_bigram[i])
 print("----------")
 
-m_trigram = make_ngram(3, melville)
+a2_trigram = make_ngram(3, a2)
 for i in range (0, 10):
-    print(m_trigram[i])
+    print(a2_trigram[i])
+print("----------")
+
+
+print("--a3")
+print(a3_valid_word_count)
+
+a3_unigram = make_ngram(1, a3)
+for i in range (0, 10):
+    print(a3_unigram[i])
+print("----------")
+
+a3_bigram  = make_ngram(2, a3)
+for i in range (0, 10):
+    print(a3_bigram[i])
+print("----------")
+
+a3_trigram = make_ngram(3, a3)
+for i in range (0, 10):
+    print(a3_trigram[i])
 print("----------")
