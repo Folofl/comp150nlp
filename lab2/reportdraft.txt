@@ -1,7 +1,7 @@
 Assignment: Lab2
 By:         Alena Borisenko 
-Created:    September 24th, 2017
-Submitted:  September 27th, 2017
+Created:    September 25th, 2017
+Submitted:  September 26th, 2017
 ===============================================================================
 
 Authors chosen:
@@ -9,3 +9,43 @@ Authors chosen:
 Analytics performed:
 
 Lunchmate recommendation:
+
+# Nabokov hates Dostoevsky
+# Tolstoy wanted to meet Dostoevsky
+# Nabokov is critical of Tolstoy but loves his Anna Karenina
+https://www.gutenberg.org/ebooks/1399
+
+----AUSTEN
+(',', 11454)
+('.', 6928)
+('to', 5183)
+('the', 4844)
+('and', 4672)
+('of', 4279)
+('I', 3178)
+('a', 3004)
+('was', 2385)
+('her', 2381)
+----------
+(', and', 1879)
+('Mr .', 1153)
+("' s", 932)
+('; and', 866)
+('Mrs .', 699)
+('to be', 595)
+(', I', 568)
+('of the', 556)
+('in the', 434)
+('; but', 427)
+----------
+('Mr . Knightley', 277)
+('Mrs . Weston', 249)
+('Mr . Elton', 214)
+('Mr . Weston', 162)
+('Mrs . Elton', 142)
+('I do not', 135)
+('Mr . Woodhouse', 132)
+('I am sure', 109)
+('. Weston ,', 104)
+('and Mrs .', 96)
+----------
