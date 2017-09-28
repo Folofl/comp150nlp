@@ -1,7 +1,7 @@
 # Assignment: Lab2
 # By:         Alena Borisenko 
 # Created:    September 25th, 2017
-# Submitted:  September 26th, 2017
+# Submitted:  September 27th, 2017
 
 import operator
 import nltk
@@ -18,8 +18,8 @@ gutenberg.fileids()
 ['austen-emma.txt', 'edgeworth-parents.txt', 'melville-moby_dick.txt']
 
 def remove_bad_words(target_list):
-    bad_vals = [',', '.', ';', "'", '-', '!', '?', '"', ',"', ']', 
-                '[', '(', ')', '."', '--', '.--', '!--', ';--']
+    bad_vals = [',', '.', ';', "'", '-', '!', '?', '"', ',"', ']', '!"', ';"', ',"--'
+                '[', '(', ')', '."', '--', '.--', '!--', ';--', ',--', '?--', '?"']
     return [value for value in target_list if value not in bad_vals ] 
 
 def make_ngram(n, source_sents):
@@ -105,12 +105,43 @@ a3_trigram   = make_ngram(3, a3)
 
 
 print("-------a1 is choosing-------")
-#sorted_ngram = {}
-    #for i in ngram:
-    #    sorted_ngram[i] = sorted(ngram[i].items(), key=operator.itemgetter(1), reverse=True)
-    #return sorted_ngram
+
+a1_sorted_unigram = {}
+
+# Sort a1's unigram from most to least common
+for i in a1_unigram:
+    a1_sorted_unigram[i] = sorted(a1_unigram[i].items(), key=operator.itemgetter(1), reverse=True)
+
+# get the top 100 most mentioned words
+a1_top_words = []
+for i in a1_sorted_unigram["nocontext"]:
+    if len(a1_top_words) < 100:
+        a1_top_words.append(i[0])
+    else:
+        break;
+
+a2_points = 0
+a3_points = 0
+for i in a1_top_words:
+    a1_candidates = sorted(a1_bigram[i].items(), key=operator.itemgetter(1), reverse=True)
+    if i in a2_bigram:
+        a2_candidates = sorted(a2_bigram[i].items(), key=operator.itemgetter(1), reverse=True)
+    if i in a3_bigram:
+        a3_candidates = sorted(a3_bigram[i].items(), key=operator.itemgetter(1), reverse=True)
+
+    if a1_candidates[0][0] == a2_candidates[0][0]:
+        a2_points +=  a2_candidates[0][1]
+    if a1_candidates[0][0] == a3_candidates[0][0]:
+        a3_points +=  a3_candidates[0][1]
 
 
+print(a2_points, a3_points)
+if   a2_points > a3_points:
+    print("a2 wins")
+elif a3_points > a2_points:
+    print("a3 wins")
+else:
+    print("tie")
 
 print("--------DIALOG START--------")
 
@@ -150,7 +181,7 @@ def update_context (context_list):
             context += " " + i
     return context
 
-def generate_sentence (word_count, ngrams):
+def generate_sentence (speaker, word_count, ngrams):
     context = "nocontext"
     context_list = []
     context = generate_start_word(context, ngrams[0], word_count)
@@ -173,10 +204,61 @@ def generate_sentence (word_count, ngrams):
                 context = update_context(context_list)
             else:
                 context += " " + context_new
-    print(sentence)
+    print(speaker + ": ", sentence)
 
 
-generate_sentence (a1_valid_word_count, [a1_unigram, a1_bigram, a1_trigram])
-generate_sentence (a2_valid_word_count, [a2_unigram, a2_bigram, a2_trigram])
-generate_sentence (a3_valid_word_count, [a3_unigram, a3_bigram, a3_trigram])
+generate_sentence ("A1", a1_valid_word_count, [a1_unigram, a1_bigram, a1_trigram])
+generate_sentence ("A3", a3_valid_word_count, [a3_unigram, a3_bigram, a3_trigram])
 
+generate_sentence ("A1", a1_valid_word_count, [a1_unigram, a1_bigram, a1_trigram])
+generate_sentence ("A3", a3_valid_word_count, [a3_unigram, a3_bigram, a3_trigram])
+
+print("---------DIALOG END---------")
+print(" ")
+print("-------a2 is choosing-------")
+
+a2_sorted_unigram = {}
+
+# Sort a2's unigram from most to least common
+for i in a2_unigram:
+    a2_sorted_unigram[i] = sorted(a2_unigram[i].items(), key=operator.itemgetter(1), reverse=True)
+
+# get the top 100 most mentioned words
+a2_top_words = []
+for i in a2_sorted_unigram["nocontext"]:
+    if len(a2_top_words) < 100:
+        a2_top_words.append(i[0])
+    else:
+        break;
+
+a1_points = 0
+a3_points = 0
+for i in a2_top_words:
+    a2_candidates = sorted(a2_bigram[i].items(), key=operator.itemgetter(1), reverse=True)
+    if i in a1_bigram:
+        a1_candidates = sorted(a1_bigram[i].items(), key=operator.itemgetter(1), reverse=True)
+    if i in a3_bigram:
+        a3_candidates = sorted(a3_bigram[i].items(), key=operator.itemgetter(1), reverse=True)
+
+    if a2_candidates[0][0] == a1_candidates[0][0]:
+        a1_points +=  a1_candidates[0][1]
+    if a2_candidates[0][0] == a3_candidates[0][0]:
+        a3_points +=  a3_candidates[0][1]
+
+
+print(a1_points, a3_points)
+if   a1_points > a3_points:
+    print("a1 wins")
+elif a3_points > a1_points:
+    print("a3 wins")
+else:
+    print("tie")
+
+print("--------DIALOG START--------")
+generate_sentence ("A2", a2_valid_word_count, [a2_unigram, a2_bigram, a2_trigram])
+generate_sentence ("A3", a3_valid_word_count, [a3_unigram, a3_bigram, a3_trigram])
+
+generate_sentence ("A2", a2_valid_word_count, [a2_unigram, a2_bigram, a2_trigram])
+generate_sentence ("A3", a3_valid_word_count, [a3_unigram, a3_bigram, a3_trigram])
+
+print("---------DIALOG END---------")
