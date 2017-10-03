@@ -44,25 +44,81 @@ Part 1: Modify grammar into CNF
 
 
     Combined:
-        ( 1 )  S  -> NP VP
-        (2-a)  S  -> XS PP
-        (2-b)  XS -> NP VP
-        (3-a)  NP -> XD XN
-        (3-b)  XD -> det
-        (3-c)  XN -> n
-        ( 4 )  NP -> n
-        ( 5 )  NP -> NP PP
-        (6-a)  VP -> XA VP
-        (6-b)  XA -> aux
-        (7-a)  VP -> XV NP
-        (7-b)  XV -> v
-        (8-a)  PP -> XP NP
-        (8-b)  XP -> p
+        ( 1)  S  -> NP VP
+        ( 2)  S  -> XS PP
+        ( 3)  XS -> NP VP
+        ( 4)  NP -> XD XN
+        ( 5)  XD -> det
+        ( 6)  XN -> n
+        ( 7)  NP -> n
+        ( 8)  NP -> NP PP
+        ( 9)  VP -> XA VP
+        (10)  XA -> aux
+        (11)  VP -> XV NP
+        (12)  XV -> v
+        (13)  PP -> XP NP
+        (14)  XP -> p
 
 -------------------------------------------------------------------------------
-Part 2: CYK Parsing Table
+Part 2: CYK parsing table
 -------------------------------------------------------------------------------
     
+    
+
+-------------------------------------------------------------------------------
+Part 3: Possible parse trees
+-------------------------------------------------------------------------------
+    
+    Two possible parses:
+
+    (S (NP (XD det) (XN n)) (VP (XA aux) (VP (XV v) (NP (NP n) (PP (XP p) (NP (XD det) (XN n)))))))
+
+    (S (XS (NP (XD det) (XN n)) (VP (XA aux) (VP (XV v) (NP n)))) (PP (XP p) (NP (XD det) (XN n))))
+
+    This is indicated by the two successful S sentence parses in the last cell
+    as well as the lack of duplicate ways to generate other sub-components of
+    each sentence (down the tree everything has only one way of resolving)
+
+-------------------------------------------------------------------------------
+Part 4: Parse of the original grammar
+-------------------------------------------------------------------------------
+
+    Using the following parse as a base:
+    (S (NP (XD det) (XN n)) (VP (XA aux) (VP (XV v) (NP (NP n) (PP (XP p) (NP (XD det) (XN n)))))))
+
+    Original grammar would look like:
+    (S (NP det n) (VP aux (VP v (NP (NP n) (PP p (NP det n))))))
+
+-------------------------------------------------------------------------------
+Part 5: Sentences from new lexicon
+-------------------------------------------------------------------------------
+    
+    Rule modifications:
+        ( 5)  XD ->   the 
+                    | this
+                    | that
+
+        ( 6)  XN ->   dog
+                    | cat
+                    | penguin
+                    | girl
+                    | boy
+
+        ( 7)  NP ->   dog
+                    | cat
+                    | penguin
+                    | girl
+                    | boy
+
+        (10)  XA ->   is
+                    | can
+                    | has
+
+        (12)  XV ->   bite
+                    | 
+        (14)  XP -> p
+
+
        det       n      aux      v       n       p      det      n
     +-------+--------+-------+-------+-------+-------+-------+-------+
      \      /\      /\      /\      /\      /\      /\      /\      /
