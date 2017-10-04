@@ -50,7 +50,8 @@ target.write("<book>\n")
 b_info_match   = re.search(b_info, data)
 # Write to file if found
 if b_info_match:
-    b_info_match = b_info_match[0].split('\n\n')
+    b_info_match = b_info_match.group(0)
+    b_info_match = b_info_match.split('\n\n')
     target.write("<booktitle>")
     target.write(b_info_match[0])
     target.write("</booktitle>\n")
