@@ -100,7 +100,6 @@ Part 5: Sentences from new lexicon
 
         ( 6)  XN ->   dog
                     | cat
-                    | penguin
                     | girl
                     | boy
 
@@ -110,49 +109,20 @@ Part 5: Sentences from new lexicon
                     | girl
                     | boy
 
-        (10)  XA ->   is
-                    | can
-                    | has
+        (10)  XA ->   can
 
         (12)  XV ->   bite
-                    | 
-        (14)  XP -> p
+                    | pet
+                    | buy
 
+        (14)  XP ->   for
 
-       det       n      aux      v       n       p      det      n
-    +-------+--------+-------+-------+-------+-------+-------+-------+
-     \      /\      /\      /\      /\      /\      /\      /\      /
-      \    /  \    /  \    /  \    /  \    /  \    /  \    /  \    /
-       \  /    \  /    \  /    \  /    \  /    \  /    \  /    \  /
-        \/      \/      \/      \/      \/      \/      \/      \/ 
-         \      /\      /\      /\      /\      /\      /\      /
-          \    /  \    /  \    /  \    /  \    /  \    /  \    / 
-           \  /    \  /    \  /    \  /    \  /    \  /    \  / 
-            \/      \/      \/      \/      \/      \/      \/ 
-             \      /\      /\      /\      /\      /\      /
-              \    /  \    /  \    /  \    /  \    /  \    /  
-               \  /    \  /    \  /    \  /    \  /    \  /  
-                \/      \/      \/      \/      \/      \/
-                 \      /\      /\      /\      /\      /
-                  \    /  \    /  \    /  \    /  \    / 
-                   \  /    \  /    \  /    \  /    \  / 
-                    \/      \/      \/      \/      \/  
-                     \      /\      /\      /\      /
-                      \    /  \    /  \    /  \    /  
-                       \  /    \  /    \  /    \  /  
-                        \/      \/      \/      \/  
-                         \      /\      /\      /
-                          \    /  \    /  \    /   
-                           \  /    \  /    \  /   
-                            \/      \/      \/
-                             \      /\      /
-                              \    /  \    /  
-                               \  /    \  /  
-                                \/      \/  
-                                 \      /
-                                  \    /   
-                                   \  /   
-                                    \/               
+    New sentences:
+        the girl can pet the cat
+        the cat can bite the dog
+        the boy can buy the penguin for the girl 
+
+        (or something weird like "cat pet boy")
 
 
   
