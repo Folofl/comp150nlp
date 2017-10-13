@@ -28,7 +28,14 @@ for review in reviews:
     all_words.extend(title)
     all_words.extend(review_text)
 
-# get the 2000 most common words featured in reviews/titles
+# get the X most common words featured in reviews/titles
+# higher X => slower but more accurate, as show by testing on train_set:
+#      num words     % correct        time
+#         ALL           ~95         ~10 min
+#        5000           ~87         ~45 sec
+#        3000           ~83         ~25 sec
+#        2000           ~79         ~16 sec
+
 all_words = nltk.FreqDist(all_words)
 all_words = all_words.most_common(2000)
 word_features = list(i[0] for i in all_words)
@@ -42,7 +49,22 @@ def review_features(review):
     return features
 
 test_review = reviews.find('review')
-print(review_features(test_review))
+
+# train classifier
+train_set = []
+for review in reviews:
+    rating      = review.find('rating').text.strip()
+    if float(rating) >= 4:
+        rating = 'pos'
+    else:
+        rating = 'neg'
+    train_set.append((review_features(review), rating))
+
+#print(train_set)
+
+classifier = nltk.NaiveBayesClassifier.train(train_set)
+print(nltk.classify.accuracy(classifier, train_set))
+classifier.show_most_informative_features(10)
 
 # for review in reviews:
 #     asin        = review.find('asin').text
