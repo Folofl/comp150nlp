@@ -28,18 +28,21 @@ for review in reviews:
     all_words.extend(title)
     all_words.extend(review_text)
 
+# get the 2000 most common words featured in reviews/titles
 all_words = nltk.FreqDist(all_words)
 all_words = all_words.most_common(2000)
 word_features = list(i[0] for i in all_words)
-print(word_features)
-
-
 
 # features
-# def review_features(review):
-#     features = {}
-#     for word in review:
-#         features['contains({})'.format(word)] = word in re
+def review_features(review):
+    review_text = review.find('review_text').text.strip().lower()
+    features = {}
+    for word in word_features:
+        features['contains({})'.format(word)] = (word in review_text)
+    return features
+
+test_review = reviews.find('review')
+print(review_features(test_review))
 
 # for review in reviews:
 #     asin        = review.find('asin').text
