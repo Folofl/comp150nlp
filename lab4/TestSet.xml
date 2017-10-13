@@ -1,0 +1,42 @@
+<reviews>
+    <review>
+        <unique_id>0000000001:nice:dude1</unique_id>
+        <asin>
+            0000000001
+        </asin>
+        <product_name>Bookity Book</product_name>
+        <product_type>books</product_type>
+        <helpful>6 of 6</helpful>
+        <title>
+            Wow! I like it!
+        </title>
+        <date>August 2, 2005</date>
+        <reviewer>dude1</reviewer>
+        <reviewer_location>Someplace</reviewer_location>
+        <review_text>
+            This is the first novel by Philip Roth that I actually like.  Portnoy's Complaint was a good hundred-page novella, spread out over a three-hundred page book; the other pages were filled with the dross of his political opinions, and his kvetching about his parents.  Operation Shylock was also too pre-occupied with pushing a political agenda (but just what agenda, we are never sure).  This is Roth's primary fault as an author - he is too didactic.  I find that I really don't care much about what Roth's political opinions are.  Ironically, this is probably one of the attributes that make him a critical darling - it shows that he thinks "deep thoughts."
+
+            The Professor of Desire is blessedly free of politics.  In it, Roth sticks with the subjects he knows best: sex and relationships.  Young David Kepesh is a sexually frustrated young student.  That changes while studying abroad in Swinging London, where he finds that what they say about Swedish girls is true.  Things take a turn for the worse after the end of his disastrous marriage finds him crushed by loneliness in New York.  With the help of a psychiatrist, Kepesh tries to discover if he will ever be able to commit to anyone or experience happiness.
+
+            The Professor of Desire finds Roth at a more mature place in his career.  Gone is the odious kvetching about his parents that polluted so much of Portnoy's Complaint; the parents in this book are treated with sympathy.  At one point, a character points out to Kepesh that there is no point in mining the workings of a Jewish family for his fiction anymore.  He is also less homophobic in this novel - but not much so.  There are still things about Roth's style that take getting used to; I don't think there's anything profound in his refusal to offset dialogue into separate paragraphs - it just makes it harder to keep track of who is speaking.  However, The Professor of Desire is a short, lyrical novel that is the best of anything I've read of his so far.
+        </review_text>
+    </review>
+    <review>
+        <unique_id>0000000001:awful:dude2</unique_id>
+        <asin>
+            0000000002
+        </asin>
+        <product_name>Bookity Book</product_name>
+        <product_type>books</product_type>
+        <helpful>6 of 6</helpful>
+        <title>
+            I hate this!
+        </title>
+        <date>August 2, 2005</date>
+        <reviewer>dude2</reviewer>
+        <reviewer_location>Someplace</reviewer_location>
+        <review_text>
+            One of the blurbs I read on the book jacket compared this book to Into Thin Air and The Perfect Storm. No way!. Those two books were edge-of-your-seat reading experiences. This account of a kayaking expedition is just plain boring. The action doesn't start until about halfway or more into the book and even then, the cliched writing and deification of Balf's subjects make this book very hard to get through. Unless you are a serious kayaking fan, I would not recommend this book
+        </review_text>
+    </review>
+</reviews>
