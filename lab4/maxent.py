@@ -9,6 +9,7 @@
 
 import nltk
 import sys
+import re
 import xml.etree.ElementTree as ET
 
 # read in command line arguments specifying filenames
@@ -16,43 +17,61 @@ train_file_name = sys.argv[-2]
 test_file_name  = sys.argv[-1]
 
 # gain access to XML data tags 
-tree = ET.parse(train_file_name)
-reviews = tree.getroot()
+train_tree    = ET.parse(train_file_name)
+train_reviews = train_tree.getroot()
 
-# gather ALL the possible words from reviews AND titles
+test_tree     = ET.parse(test_file_name)
+test_reviews  = test_tree.getroot()
+
+# gather ALL the possible words from train_reviews, include titles
 all_words = []
 
-for review in reviews:
-    title       = review.find('title').text.strip().lower().split()
-    review_text = review.find('review_text').text.strip().lower().split()
+for review in train_reviews:
+    title       = review.find('title').text.strip().lower()
+    title       = re.sub(r'[^\w\s]', '', title).split()
+    review_text = review.find('review_text').text.strip().lower()
+    review_text = re.sub(r'[^\w\s]', '', review_text).split()
     all_words.extend(title)
     all_words.extend(review_text)
 
-# get the X most common words featured in reviews/titles
+all_asin    = []
+#all_ratings = []
+
+for review in test_reviews:
+    asin = review.find('asin').text.strip()
+    # rating      = review.find('rating').text.strip()
+    # if float(rating) >= 4:
+    #     rating = 'pos'
+    # else:
+    #     rating = 'neg'
+    all_asin.append(asin)
+    #all_ratings.append(rating)
+
+# get the X most common words featured in train_reviews/their titles
 # higher X => slower but more accurate, as show by testing on train_set:
 #      num words     % correct        time
 #         ALL           ~95         ~10 min
 #        5000           ~87         ~45 sec
 #        3000           ~83         ~25 sec
 #        2000           ~79         ~16 sec
-
 all_words = nltk.FreqDist(all_words)
-all_words = all_words.most_common(2000)
+all_words = all_words.most_common(5000)
 word_features = list(i[0] for i in all_words)
 
-# features
+# check if a given review contains the words we look for
 def review_features(review):
     review_text = review.find('review_text').text.strip().lower()
+    review_text = re.sub(r'[^\w\s]', '', review_text).split()
     features = {}
     for word in word_features:
         features['contains({})'.format(word)] = (word in review_text)
     return features
 
-test_review = reviews.find('review')
+test_review = train_reviews.find('review')
 
 # train classifier
 train_set = []
-for review in reviews:
+for review in train_reviews:
     rating      = review.find('rating').text.strip()
     if float(rating) >= 4:
         rating = 'pos'
@@ -60,36 +79,15 @@ for review in reviews:
         rating = 'neg'
     train_set.append((review_features(review), rating))
 
+test_set = []
+for review in test_reviews:
+    test_set.append((review_features(review)))
+
 #print(train_set)
 
 classifier = nltk.NaiveBayesClassifier.train(train_set)
-print(nltk.classify.accuracy(classifier, train_set))
-classifier.show_most_informative_features(10)
+classifier.show_most_informative_features(100)
+predictions = classifier.classify_many(test_set)
 
-# for review in reviews:
-#     asin        = review.find('asin').text
-#     print(asin)
-#     rating      = review.find('rating').text.strip()
-#     print(rating)
-#     if float(rating) >= 4:
-#         rating = 'Positive'
-#     else:
-#         rating = 'Negative'
-#     helpful     = review.find('helpful').text.split()
-#     if len(helpful) == 3:
-#         helpful = int(helpful[0]) / int(helpful[2])
-#     else:
-#         helpful = -1
-#     review_text = review.find('review_text').text
-    
-#     print(rating)
-#     print(helpful)
-#     print(review_text)
-#     print('hallelujah' in review_text)
-
-
-# features
-
-
-# output:
-# uniqueID $tab$ Positive/Negative
+for i in range(0, len(predictions)):
+    print(all_asin[i], "\t", ("Positive" if predictions[i] == "pos" else "Negative"))
