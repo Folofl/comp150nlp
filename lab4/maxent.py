@@ -45,6 +45,7 @@ for review in test_reviews:
 # get the X most common words featured in train_reviews/their titles
 # higher X => slower but more accurate, as show by testing on full train set
 #      num words     % correct        time
+#       10000           ~96         ~ 2 min 26 sec
 #        7000           ~93         ~ 1 min 53 sec
 #        5000           ~90         ~ 1 min 20 sec
 #        3000           ~87         ~       55 sec
