@@ -1,5 +1,19 @@
+# Assignment: Lab5
+# By:         Alena Borisenko 
+# Created:    October 12th, 2017
+# Submitted:  October 18th, 2017
+
+import nltk
+from nltk.corpus import brown
+
 import numpy as np
 import matplotlib.pyplot as plt
+
+# check if package is installed 
+try:
+    nltk.data.find('corpora/brown')
+except LookupError:
+    nltk.download('brown')
 
 
 #Corpus: I like deep learning. I like NLP. I enjoy sailing.
