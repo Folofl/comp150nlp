@@ -10,6 +10,7 @@ from   nltk.tokenize import RegexpTokenizer
 
 import time
 import re
+import pickle
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -51,15 +52,19 @@ corp_len = len(corpus)
 # words contains mapping: UNIQUE word key -> index in the X matrix
 index = 0
 words = {}
+keys  = []
 for i in corpus:
     if i not in words:
         words[i] = index;
+        keys.append(i)
         index += 1
-sorted_words = sorted(words.items(), key=itemgetter(1))
-dim = len(words)
+term = len(words)
+# save keys for use by analogy.py
+with open('keys', 'wb') as fp:
+    pickle.dump(keys, fp)
 
-#create a 2D array of size dim x dim; set all values to 0
-X = np.zeros(shape=(dim, dim), dtype=int)
+#create a 2D array of size term x term; set all values to 0
+X = np.zeros(shape=(term, term), dtype=int)
 
 start = time.time()
 
