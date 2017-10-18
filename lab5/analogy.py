@@ -11,8 +11,11 @@ import numpy as np
 
 # unpickle matrix terms
 with open ('keys', 'rb') as fp:
-    keys = pickle.load(fp)
-
+    keys  = pickle.load(fp)
+# unpickle matrix word dict
+with open ('words', 'rb') as fp:
+    words = pickle.load(fp)
+    
 # load the X matrix
 X = np.load('Xmatrix.npy')
 # load the U matrix
@@ -30,8 +33,12 @@ def find_analogy(A, B, C):
         print("ERROR: {} is not in the term list".format(C))
         D = "ERROR"
 
-    if D = "ERROR":
+    if D == "ERROR":
         return D
+
+    print(words[A])
+    print(words[B])
+    print(words[C])
 
     return D
 
