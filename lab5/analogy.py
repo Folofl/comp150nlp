@@ -18,6 +18,20 @@ X = np.load('Xmatrix.npy')
 # load the U matrix
 U = np.load('Umatrix.npy')
 
+def find_analogy(A, B, C):
+    D = "UNKNOWN"
+    if A not in keys:
+        print("ERROR: {} is not in the term list".format(A))
+        D = "ERROR"
+    if B not in keys:
+        print("ERROR: {} is not in the term list".format(B))
+        D = "ERROR"
+    if C not in keys:
+        print("ERROR: {} is not in the term list".format(C))
+        D = "ERROR"
+
+    return D
+
 user_input= ""
 
 while (True):
@@ -26,14 +40,20 @@ while (True):
     if user_input == "quit":
         break
 
-    user_input = user_input.split()
+    input_list = user_input.split()
 
-    if (len(user_input)   != 8    or 
-            user_input[1] != "is" or 
-            user_input[2] != "to" or
-            user_input[4] != "as" or
-            user_input[6] != "is" or
-            user_input[7] != "to"):
-        print("Expected format: X is to Y as Z is to\n")
+    if (len(input_list)   != 8    or 
+            input_list[1] != "is" or 
+            input_list[2] != "to" or
+            input_list[4] != "as" or
+            input_list[6] != "is" or
+            input_list[7] != "to"):
+        print("Expected format: A is to B as C is to \n")
     else:
-        print("Please wait...\n")
+        print("Please wait...")
+        A = input_list[0]
+        B = input_list[3]
+        C = input_list[5]
+        D = find_analogy(A, B, C)
+        if (D != "ERROR"):
+            print(user_input, D, "\n")
