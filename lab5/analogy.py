@@ -12,6 +12,6 @@ while (True):
     user_input = input("Please enter an analogy\n")
     if user_input == "quit":
         break
-        
-    print(user_input)
+
+    print(user_input.split())
     print("Please wait...\n")
