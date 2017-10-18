@@ -62,6 +62,9 @@ term = len(words)
 # save keys for use by analogy.py
 with open('keys', 'wb') as fp:
     pickle.dump(keys, fp)
+# save words for use by analogy.py
+with open('words', 'wb') as fp:
+    pickle.dump(words, fp)
 
 #create a 2D array of size term x term; set all values to 0
 X = np.zeros(shape=(term, term), dtype=int)

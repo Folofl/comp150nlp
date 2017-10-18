@@ -30,6 +30,9 @@ def find_analogy(A, B, C):
         print("ERROR: {} is not in the term list".format(C))
         D = "ERROR"
 
+    if D = "ERROR":
+        return D
+
     return D
 
 user_input= ""
