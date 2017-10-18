@@ -31,11 +31,11 @@ np.set_printoptions(suppress=True)
 
 la = np.linalg
 
-# corpus contains all words as they appear in brown corpus
-#corpus = brown.raw()
+# corpus contains all words with repetitions
+# corpus = brown.raw() # does not play nice with SVD bc of the size
 corpus = brown.raw(categories='romance')
-#corpus = "I think that is a cat, what about the dog's? Don't know"
 
+# make everything lowercase
 corpus = corpus.lower()
 
 # remove punctuation
@@ -55,16 +55,16 @@ for i in corpus:
     if i not in words:
         words[i] = index;
         index += 1
-
 sorted_words = sorted(words.items(), key=itemgetter(1))
-
 dim = len(words)
 
 #create a 2D array of size dim x dim; set all values to 0
 X = np.zeros(shape=(dim, dim), dtype=int)
 
 start = time.time()
-win_size = 7
+
+# look for matching words in a window of _ words to the left/right
+win_size = 7 
 for i in range(0, corp_len):
     # check the left side
     left_i = i - 1
@@ -83,29 +83,18 @@ for i in range(0, corp_len):
 
 print("Made X in %s seconds" % (time.time() - start))
 
-# start = time.time()
-# # save the matrix to a file for later use
-# np.savetxt('matrix.txt', X, fmt='%i')
-# print("---- %s seconds ---" % (time.time() - start))
+start = time.time()
+# compute the SVD decomposition of the matrix
+#   U = matrix containing the left  singular vectors of X
+#   s = vector containing the       singular values  of X
+#   V = matrix containing the right singular vectors of X
+U, s, V = la.svd(X, full_matrices=False, compute_uv=True)
+print("Made U in %s seconds" % (time.time() - start))
 
+start = time.time()
+np.save('Xmatrix.npy', X)
+print("Saved  Xmatrix.npy in %s seconds" % (time.time() - start))
 
-#Corpus: I like deep learning. I like NLP. I enjoy sailing.
-# la = np.linalg
-# words = ["I", "like", "enjoy", "deep", "learning", "NLP", "sailing", "."]
-
-# X2 = np.array([[0,2,1,0,0,0,0,0],
-# 			     [2,0,0,1,0,1,0,0],
-# 			     [1,0,0,0,0,0,1,0],
-# 			     [0,1,0,0,1,0,0,0],
-# 			     [0,0,0,1,0,0,0,1],
-# 			     [0,1,0,0,0,0,0,1],
-# 			     [0,0,1,0,0,0,0,1],
-# 			     [0,0,0,0,1,1,1,0]])
-# print(X2)
-
-# U, s, V = la.svd(X, full_matrices=False)
-
-# for i in range(len(words)):
-# 	plt.text(U[i, 0], U[i, 1], words[i])
-
-# plt.show()
+start = time.time()
+np.save('Umatrix.npy', U)
+print("Saved  Umatrix.npy in %s seconds" % (time.time() - start))
