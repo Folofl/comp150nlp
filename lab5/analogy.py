@@ -17,12 +17,14 @@ with open ('words', 'rb') as fp:
     words = pickle.load(fp)
 
 # load the X matrix
-X = np.load('Xmatrix.npy')
-# load the U matrix
-U = np.load('Umatrix.npy')
-
-k = 100
+X  = np.load('Xmatrix.npy')
+# # load the U matrix
+# U  = np.load('Umatrix.npy')
+# load the kU matrix
 kU = np.load('kUmatrix.npy')
+
+# k = 1000
+# kU = U[:,:k]
 
 def check_input(A, B, C):
     D = "OK"
@@ -44,19 +46,29 @@ def find_analogy(matrix, user_input, A, B, C):
     if input_status == "ERROR":
         return 
 
+    # need to compare results of the following equation:
+    #     || D - C + A - B ||^2  
+    # =>  || D + A - B - C ||^2  
+    # =>  || A - B - C + D ||^2
+
+    # A - B
     ABdiff  = np.subtract(matrix[ words[A] ], matrix[ words[B] ])
+    # A - B - C
     ABCdiff = np.subtract(ABdiff, matrix[ words[C] ])
 
     D = "UNKNOWN"
-    min_mag = 10000000
+    curr_min = 10000000
     for key in keys:
         if key != A and key != B and key != C:
-            ABCD      = np.add(ABCdiff, matrix[ words[key] ])
-            ABCD2     = np.power(ABCD, 2)
-            magnitude = np.linalg.norm(ABCD2)
+            #    A - B - C + D
+            ABCD    = np.add(ABCdiff, matrix[ words[key] ])
+            # || A - B - C + D ||
+            ABCDmag = np.linalg.norm(ABCD)
+            # || A - B - C + D ||^2
+            result  = np.power(ABCDmag, 2)
 
-            if magnitude < min_mag:
-                min_mag = magnitude
+            if result < curr_min:
+                curr_min = result
                 D = key
 
     if (D != "UNKNOWN"):
@@ -85,6 +97,7 @@ while (True):
         A  = input_list[0]
         B  = input_list[3]
         C  = input_list[5]
-        find_analogy(X, user_input, A, B, C)
-        #find_analogy(U, user_input, A, B, C)
+        find_analogy( X, user_input, A, B, C)
+        #find_analogy( U, user_input, A, B, C)
+        #find_analogy(kU, user_input, A, B, C)
         print("")

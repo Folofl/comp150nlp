@@ -89,26 +89,31 @@ for i in range(0, corp_len):
         right_i   += 1
         countdown -= 1
 
-print("Made X in %s seconds" % (time.time() - start))
+print("Made  X in %s seconds" % (time.time() - start))
 
-start = time.time()
 # compute the SVD decomposition of the matrix
 #   U = matrix containing the left  singular vectors of X
 #   s = vector containing the       singular values  of X
 #   V = matrix containing the right singular vectors of X
+start = time.time()
 U, s, V = la.svd(X, full_matrices=False, compute_uv=True)
-print("Made U in %s seconds" % (time.time() - start))
+print("Made  U in %s seconds" % (time.time() - start))
 
-# start = time.time()
-# np.save('Xmatrix.npy', X)
-# print("Saved  Xmatrix.npy in %s seconds" % (time.time() - start))
-
-# start = time.time()
-# np.save('Umatrix.npy', U)
-# print("Saved  Umatrix.npy in %s seconds" % (time.time() - start))
-
-k  = 10
+# get a "sub-matrix" of U in which we only want the first k columns
+k  = 1000
+start = time.time()
 kU = U[:,:k]
+print("Made kU in %s seconds" % (time.time() - start))
+
+# save the matrices
+start = time.time()
+np.save('Xmatrix.npy', X)
+print("Saved  Xmatrix.npy in %s seconds" % (time.time() - start))
+
+start = time.time()
+np.save('Umatrix.npy', U)
+print("Saved  Umatrix.npy in %s seconds" % (time.time() - start))
+
 start = time.time()
 np.save('kUmatrix.npy', kU)
 print("Saved kUmatrix.npy in %s seconds" % (time.time() - start))
