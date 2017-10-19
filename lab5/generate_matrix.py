@@ -34,7 +34,7 @@ la = np.linalg
 
 # corpus contains all words with repetitions
 # corpus = brown.raw() # does not play nice with SVD bc of the size
-corpus = brown.raw(categories='romance')
+corpus = brown.raw(categories='romance') + brown.raw(categories='adventure')
 
 # make everything lowercase
 corpus = corpus.lower()

@@ -21,8 +21,10 @@ X = np.load('Xmatrix.npy')
 # load the U matrix
 U = np.load('Umatrix.npy')
 
-def find_analogy(A, B, C):
-    D = "UNKNOWN"
+
+def check_input(A, B, C):
+    D = "OK"
+
     if A not in keys:
         print("ERROR: {} is not in the term list".format(A))
         D = "ERROR"
@@ -33,36 +35,54 @@ def find_analogy(A, B, C):
         print("ERROR: {} is not in the term list".format(C))
         D = "ERROR"
 
-    if D == "ERROR":
-        return D
+    return D
+
+
+def find_analogy_X(user_input, A, B, C):
+    input_status = check_input(A, B, C)
+    if input_status == "ERROR":
+        return
 
     ABdiff  = np.subtract(X[ words[A] ], X[ words[B] ])
     ABCdiff = np.subtract(ABdiff, X[ words[C] ])
-    print(ABdiff)
-    print(ABCdiff)
 
-    min_sum = 10000000
+    D = "UNKNOWN"
+    min_mag = 10000000
     for key in keys:
         if key != A and key != B and key != C:
             ABCD    = np.add(ABCdiff, X[ words[key] ])
             ABCD2   = np.power(ABCD, 2)
-            ABCDsum = np.sum(ABCD2)
+            magnitude = np.linalg.norm(ABCD2)
 
-            if ABCDsum < min_sum:
-                min_sum = ABCDsum
+            if magnitude < min_mag:
+                min_mag = magnitude
                 D = key
 
-    print(min_sum)
+    if (D != "UNKNOWN"):
+            print(user_input, D)
 
+def find_analogy_U(user_input, A, B, C):
+    input_status = check_input(A, B, C)
+    if input_status == "ERROR":
+        return 
 
-    # print(U[ words[A] ])
-    # print(U[ words[B] ])
-    # print(U[ words[C] ])
+    ABdiff  = np.subtract(U[ words[A] ], U[ words[B] ])
+    ABCdiff = np.subtract(ABdiff, U[ words[C] ])
 
-    # for key in keys:
+    D = "UNKNOWN"
+    min_mag = 10000000
+    for key in keys:
+        if key != A and key != B and key != C:
+            ABCD      = np.add(ABCdiff, U[ words[key] ])
+            ABCD2     = np.power(ABCD, 2)
+            magnitude = np.linalg.norm(ABCD2)
 
+            if magnitude < min_mag:
+                min_mag = magnitude
+                D = key
 
-    return D
+    if (D != "UNKNOWN"):
+            print(user_input, D)
 
 user_input= ""
 
@@ -74,6 +94,7 @@ while (True):
 
     input_list = user_input.split()
 
+    # check the format
     if (len(input_list)   != 8    or 
             input_list[1] != "is" or 
             input_list[2] != "to" or
@@ -83,9 +104,9 @@ while (True):
         print("Expected format: A is to B as C is to \n")
     else:
         print("Please wait...")
-        A = input_list[0]
-        B = input_list[3]
-        C = input_list[5]
-        D = find_analogy(A, B, C)
-        if (D != "ERROR"):
-            print(user_input, D, "\n")
+        A  = input_list[0]
+        B  = input_list[3]
+        C  = input_list[5]
+        find_analogy_X(user_input, A, B, C)
+        #find_analogy_U(user_input, A, B, C)
+        print("")
