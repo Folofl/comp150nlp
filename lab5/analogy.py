@@ -21,6 +21,8 @@ X = np.load('Xmatrix.npy')
 # load the U matrix
 U = np.load('Umatrix.npy')
 
+k = 100
+kU = np.load('kUmatrix.npy')
 
 def check_input(A, B, C):
     D = "OK"
@@ -37,43 +39,19 @@ def check_input(A, B, C):
 
     return D
 
-
-def find_analogy_X(user_input, A, B, C):
-    input_status = check_input(A, B, C)
-    if input_status == "ERROR":
-        return
-
-    ABdiff  = np.subtract(X[ words[A] ], X[ words[B] ])
-    ABCdiff = np.subtract(ABdiff, X[ words[C] ])
-
-    D = "UNKNOWN"
-    min_mag = 10000000
-    for key in keys:
-        if key != A and key != B and key != C:
-            ABCD    = np.add(ABCdiff, X[ words[key] ])
-            ABCD2   = np.power(ABCD, 2)
-            magnitude = np.linalg.norm(ABCD2)
-
-            if magnitude < min_mag:
-                min_mag = magnitude
-                D = key
-
-    if (D != "UNKNOWN"):
-            print(user_input, D)
-
-def find_analogy_U(user_input, A, B, C):
+def find_analogy(matrix, user_input, A, B, C):
     input_status = check_input(A, B, C)
     if input_status == "ERROR":
         return 
 
-    ABdiff  = np.subtract(U[ words[A] ], U[ words[B] ])
-    ABCdiff = np.subtract(ABdiff, U[ words[C] ])
+    ABdiff  = np.subtract(matrix[ words[A] ], matrix[ words[B] ])
+    ABCdiff = np.subtract(ABdiff, matrix[ words[C] ])
 
     D = "UNKNOWN"
     min_mag = 10000000
     for key in keys:
         if key != A and key != B and key != C:
-            ABCD      = np.add(ABCdiff, U[ words[key] ])
+            ABCD      = np.add(ABCdiff, matrix[ words[key] ])
             ABCD2     = np.power(ABCD, 2)
             magnitude = np.linalg.norm(ABCD2)
 
@@ -107,6 +85,6 @@ while (True):
         A  = input_list[0]
         B  = input_list[3]
         C  = input_list[5]
-        find_analogy_X(user_input, A, B, C)
-        #find_analogy_U(user_input, A, B, C)
+        find_analogy(X, user_input, A, B, C)
+        #find_analogy(U, user_input, A, B, C)
         print("")

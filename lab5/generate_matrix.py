@@ -99,10 +99,16 @@ start = time.time()
 U, s, V = la.svd(X, full_matrices=False, compute_uv=True)
 print("Made U in %s seconds" % (time.time() - start))
 
-start = time.time()
-np.save('Xmatrix.npy', X)
-print("Saved  Xmatrix.npy in %s seconds" % (time.time() - start))
+# start = time.time()
+# np.save('Xmatrix.npy', X)
+# print("Saved  Xmatrix.npy in %s seconds" % (time.time() - start))
 
+# start = time.time()
+# np.save('Umatrix.npy', U)
+# print("Saved  Umatrix.npy in %s seconds" % (time.time() - start))
+
+k  = 10
+kU = U[:,:k]
 start = time.time()
-np.save('Umatrix.npy', U)
-print("Saved  Umatrix.npy in %s seconds" % (time.time() - start))
+np.save('kUmatrix.npy', kU)
+print("Saved kUmatrix.npy in %s seconds" % (time.time() - start))
