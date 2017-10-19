@@ -1,9 +1,10 @@
 # Assignment:  Lab5
 # By:          Alena Borisenko 
-# Created:     October 12th, 2017
+# Created:     October 17th, 2017
 # Submitted:   October 18th, 2017
 #
-# Description: Once a matrix has been generated, this program will
+# Description: Once generate_matromatrix.py has been generated the
+#              required matrices and keys/words, this program will
 #              (attempt to) complete user-requested analogies.
 
 import pickle
@@ -18,13 +19,13 @@ with open ('words', 'rb') as fp:
 
 # load the X matrix
 X  = np.load('Xmatrix.npy')
+
 # # load the U matrix
 # U  = np.load('Umatrix.npy')
+
 # load the kU matrix
 kU = np.load('kUmatrix.npy')
 
-# k = 1000
-# kU = U[:,:k]
 
 def check_input(A, B, C):
     D = "OK"
@@ -99,5 +100,5 @@ while (True):
         C  = input_list[5]
         find_analogy( X, user_input, A, B, C)
         #find_analogy( U, user_input, A, B, C)
-        #find_analogy(kU, user_input, A, B, C)
+        find_analogy(kU, user_input, A, B, C)
         print("")

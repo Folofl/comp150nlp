@@ -29,6 +29,7 @@ except LookupError:
 
 np.set_printoptions(threshold=np.nan)
 np.set_printoptions(suppress=True)
+np.set_printoptions(precision=2)
 
 la = np.linalg
 
