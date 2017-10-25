@@ -1,6 +1,40 @@
 Assignment:  Lab6
 By:          Alena Borisenko 
 Created:     October 18th, 2017
-Submitted:   October th, 2017
+Submitted:   October 24th, 2017
 ===============================================================================
 
+    Three sentence pairs such that: 
+        sentence 1: has at least two equally plausible interpretations
+        sentence 2: resolves the ambiguity of sentence 1
+
+-------------------------------------------------------------------------------
+Pair 1
+-------------------------------------------------------------------------------
+
+    I make a crazy amount of dough at my new job!
+    ...
+    And none of it goes to waste because we get so many cake orders.
+
+    (vs 'I hope this month I get to spend it on something other than rent')
+
+-------------------------------------------------------------------------------
+Pair 2
+-------------------------------------------------------------------------------
+
+    - Damn, that's one ugly mug.
+    ...
+    - Yeah, my gran bought it at the dollar store.
+
+    (vs '- Wow, that's a pretty rude thing to say about someone')
+    
+-------------------------------------------------------------------------------
+Pair 3
+-------------------------------------------------------------------------------
+
+    My mouse died earlier today, but I might get another later this week.
+    ...
+    I'm still coping, but mice are social animals and Peanut is going to be 
+    lonely without Mr. Nibbles.
+
+    (vs 'I might go for a wireless model this time')
