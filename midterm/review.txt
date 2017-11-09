@@ -94,6 +94,27 @@
         Useful for:
             computing probability for both observed and hidden events.
 
+    Maximum-Entropy Markov Model
+        Combines HMM and MaxEnt models
+        Assumes that unknown values are connected rather than independent.
+        Useful for:
+            part-of-speech tagging
+            information extraction
+        Pros:
+            more freedom in choosing features
+            efficient training (avoids fwd-bwd alg)
+        Cons:
+            label bias problem (states that split less have higher prob)
+
+    Conditional Random Field
+        Takes context into account
+        Relax some assumptions about the input and output seq distributions
+        Useful for:
+            encoding known relations between observations
+            constructing consistent interpretations
+            labeling or parsing of sequential data
+            part-of-speech tagging
+
     Three fundamental problems:
         Likelihood ---> forward alg
             Given HMM λ = (A,B) and observation sequence O, 
@@ -108,27 +129,139 @@
     Forward Algorithm
         O(N²T)
         Uses dynamic programming by storing intermediate values in prob table.
-        Multiply probability of getting to current state from last by the
-            probability of observationg in current state.
-        Then, add probabilities from paths leading to it. 
+        For each path, multiply probability of getting to given state from 
+        previous state by the probability of seeing observation in that state.
+        Then, add probabilities from all paths leading to given state.  
 
     Viterbi Algorithm
+        Uses dynamic programming by storing intermediate values in prob table.
+        Multiply probability of getting to current state from last by the
+            probability of seeing observation in current state.
+        Then, choose the max probability among paths leading to given state.
+        Keep a backpointer to the best path that led to current state.
 
+    Forward-backward or Baum-Welch Algorithm
+        Special case of the expectation-maximization algorithm.
 
 ------------------------------------------------------------------------------
  N-Grams
 ------------------------------------------------------------------------------
 
+    Uses:
+        Assign probability to each possible next word
+        Predict next word
+        Predict which sequence has a higher probability of appearing in text
+        Spelling correction
+        Speech recognition
+        Machine translation
+
+    Main task:
+        Computing P(w|h), probability of word w given some history h.
+
+    Bigram
+        Looks one word into the past
+        Markov assumption: probability of a word depends only on previous word
+
+    Maximum Likelihood Estimation
+        Way to estimate n-gram probabilities
+        Get counts from a corpus and normalize between 0 and 1
+
+    Perplexity
+        Geometric mean of the inverse test set probability
+
+    Smoothing algorithms
+        More sophisticated way to estimate n-gram probabilities
+        Common algs rely on backoff or interpolation, which use discounting
+            to create a probability distribution
+
 ------------------------------------------------------------------------------
  Context-Free Grammars
 ------------------------------------------------------------------------------
+
+    Uses:
+        Given sentence with marked parts of speech, follow rules to see if the
+            given sentence can be generated.
+        Given set of rules, generate new sentences.
+
+    CNF
+        Required for CYK parsing
+        Format:
+            A -> B C     (rhs is either two non-terminals
+            B -> word                or one     terminal )
+        Can convert any grammar to this format by creating "dummy" rules:
+            VP -> aux VP =>     VP -> XA VP
+                                XA -> aux
+            NP -> det n  =>     NP -> XD XN
+                                XD -> det
+                                XN -> n
+
+    Treebank parse
+        Way to represent a successful sentence parse
+        (S (NP ...) (VP ...))
+
+    CYK vs Earley Alg
+        "cone" vs "moving dot"
+        CYK is simpler, but Earley does not require CNF
 
 ------------------------------------------------------------------------------
  Logistic Regression
 ------------------------------------------------------------------------------
 
+    z = w*x + b
+
 ------------------------------------------------------------------------------
- Word Vectors
+ Neural Networks
 ------------------------------------------------------------------------------
 
+    More powerful classifier than logistic regression
 
+    Problem:
+        XOR function cannot be calculated by single perceptron
+
+    Structure
+        Composed of computational units, which takes input, performs some
+            computation and produces an output, activation.
+        Each unit multiplies input by weight vector, adds a bias and
+            applies a non-linear activation function.
+        Activation functions:
+                           1
+            sigmoid = ------------     =>     [ 0, 1]
+                       1 + e^(-z)
+
+                      e^z - e^(-z)
+            tanh    = ------------     =>     [-1, 1]
+                      e^z + e^(-z)
+
+            ReLU    =   max(0, z)      =>     [ 0, ∞]
+        Hidden layer output:
+            h = σ(Wx + b)
+        Softmax:
+            normalize between 0 and 1 and make all probs add up to 1
+
+    Backpropagation
+        Update the weights in the network so that they cause the actual
+            output to be closer to the target output.
+
+------------------------------------------------------------------------------
+ Semantics
+------------------------------------------------------------------------------
+
+    First Order Propositional Calculus
+        Objects/Terms                --->     Restaurant(x)
+        Relations b/w objects        --->     Near(x, y)
+        Properties of objects        --->     Color(a)
+        Quantifiers, connectives     --->     ⋀, ⋁, ∀, ∃, ⇒, etc
+
+        Example:
+            A restaurant that serves veg food near Masala
+                ∃x   Restaurant(x)
+                   ⋀ Serves(x, veg)
+                   ⋀ Near(Location(x), Location(Masala))
+
+        Forward vs Backward chaining
+            fwd: lots of pre-computation
+                 use actual constants instead of variables
+                 => space concern
+            bwd: lots of constants to check over at the lower level
+                 might check nonsense variables
+                 => time concern
