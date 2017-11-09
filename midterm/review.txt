@@ -1,0 +1,134 @@
+------------------------------------------------------------------------------
+ Regular Expressions
+------------------------------------------------------------------------------
+
+    .            =>    any character
+    beg.n        =>    begin   or    began
+    \d           =>    any number
+    \bword\b     =>    any word
+    \s           =>    any space
+    [Bb]asic     =>    basic   or    Basic
+    [0-9]        =>    any number in range, square brackets mean OR
+    [0-9]        =>    any number greater than 0
+    [a-z]        =>    any lowercase letter
+    (cat | dog)  =>    cat or dog
+    [^abc]       =>    not a, not b, not c
+    \^           =>    ^
+    dogs\?       =>    dogs?
+    dogs?        =>    dog     or    dogs
+    dogs*        =>    dog     to    dogsssssssss...
+    dogs+        =>    dogs    to    dogsssssssss...
+    (dogs)+      =>    dogs    to    dogsdogsdogs...
+    dogs{3}      =>    dogsss
+    dogs{3, 4}   =>    dogsss  or    dogssss
+    dogs{3,}     =>    dogsss  to    dogsssssssss...
+
+    can generate via FSA
+        limitation: can't count/match (pumping lemma)
+
+------------------------------------------------------------------------------
+ Stemming and Lemmatization
+------------------------------------------------------------------------------
+
+    How data is obtained:
+        self-perpetuating        (self-generated sample)
+        existing human labor     (what people already do happens to be useful)
+        easy human labor         (mindless)
+        hard human labor         (takes some skill or thinking)
+
+    Challenges:
+        Punctuation                (end of sentence vs Mr. etc)
+        Multi-word proper nouns    (New York City, Barack Obama)
+
+    Stemming is for regular morpheme differences:
+        talking     =>     talk
+        organizes   =>     organize
+    Lemmatization is for unintuitive words:
+        is          =>     be
+        automobile  =>     car
+
+    Morpheme:
+        inflection    (plural nouns, verb tense)
+        derivation    (class change,         e.g. verb to noun)
+        compounding   (two words combined,   e.g. desktop)
+        cliticization (contractions,         e.g. 're, 'd, 'll)
+
+    Agressive stemming:
+        Can reduce words only to the meaningful parts 
+
+    Porter stemmer:
+        Vowels:     a, i, u, e, o, cy  => v
+        Consonants: all others         => c
+        Example:
+            troubles => ccvvccvc => CVCVC => [C]VC{2}[V]
+
+------------------------------------------------------------------------------
+ HMMs to CRFs
+------------------------------------------------------------------------------
+
+    Hidden vs Observable events
+        Observable = seen in the input (e.g. words, data from observations)
+        Hidden     = derived/estimated (e.g. temp based on ice cream sales)
+
+    Markov chain     (= Observed Markov Model)
+        Extension/special case of weighted finite automata.
+            Weights are probabilities.
+            Probabilities of outgoing arcs from a given state sum to one.
+        Key Assumption:
+            Prob of given state depends only on the previous state:
+                P(qi | q1...qi-1) = P(qi | qi-1)
+        Useful for:
+            assigning probabilities to unambiguous sequences,
+            computing probability for sequence of observable events
+
+    Hidden Markov Model
+        Probabilistic sequence model, maps observations to possible labels.
+        One of the most important ML models in speech and language processing.
+        Key Assumptions:
+            Prob of given state depends only on the previous state:
+                P(qi | q1...qi-1) = P(qi | qi-1)
+            Prob of output observation depends only on state that produced it:
+                P(oi | q1...qi,...,qt,o1,...,oi,...,ot) = P(oi | qi)
+        Example:
+            P(BEE HAT) = P(B|start) P(E|B) P(E|E) P(H|B) P(A|E) P(T|E)
+        Useful for:
+            computing probability for both observed and hidden events.
+
+    Three fundamental problems:
+        Likelihood ---> forward alg
+            Given HMM λ = (A,B) and observation sequence O, 
+                find P(O | λ)
+        Decoding   ---> viterbi alg
+            Given HMM λ = (A,B) and observation sequence O, 
+                find best/most probable hidden state seq Q
+        Learning   ---> fwd-bwd alg
+            Given set of HMM states and observation seq O, 
+                learn HMM parameters A and B
+
+    Forward Algorithm
+        O(N²T)
+        Uses dynamic programming by storing intermediate values in prob table.
+        Multiply probability of getting to current state from last by the
+            probability of observationg in current state.
+        Then, add probabilities from paths leading to it. 
+
+    Viterbi Algorithm
+
+
+------------------------------------------------------------------------------
+ N-Grams
+------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------
+ Context-Free Grammars
+------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------
+ Logistic Regression
+------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------
+ Word Vectors
+------------------------------------------------------------------------------
+
+
