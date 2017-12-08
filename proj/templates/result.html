@@ -1,0 +1,69 @@
+<html>
+    <head>
+        <title>NLP Final Project</title>
+        <link href="https://fonts.googleapis.com/css?family=Gudea|Quicksand" rel="stylesheet">
+        <style>
+            html,body {
+                height: 100%;
+                width:  100%;
+                margin: 0;
+            }
+            body {
+                background-image: url("../static/images/kaomoji.png");
+                /*background-color: #bc002d;*/
+                font-family: 'Quicksand', sans-serif;
+            }
+            .center {
+                text-align: center;
+            }
+            div {
+                position: relative;
+                z-index: 1;
+
+                top: 15%;
+
+                max-width: 900px;
+
+                margin:        auto;
+                margin-top:     0px;
+                margin-bottom: 20px;
+                padding: 10px;
+
+                background: white;
+
+                box-shadow: 0 4px 8px  0 rgba(0, 0, 0, 0.25), 
+                            0 6px 20px 0 rgba(0, 0, 0, 0.22);
+            }
+            p {
+                font-family: 'Quicksand', sans-serif;
+            }
+        </style>
+    <head>
+    <body>
+        <div class="parent">
+            <h1 class="center">Stats for user {{user}}</h1>
+            <h2>Percent of JLPT kanji used:</h2>
+            <ul>
+                <li>N5: {{'%0.2f' % ((jlpt_kanji_use[5] / num_jlpt_kanji[5])*100)|float}}%</li>
+                <li>N4: {{'%0.2f' % ((jlpt_kanji_use[4] / num_jlpt_kanji[4])*100)|float}}%</li>
+                <li>N3: {{'%0.2f' % ((jlpt_kanji_use[3] / num_jlpt_kanji[3])*100)|float}}%</li>
+                <li>N2: {{'%0.2f' % ((jlpt_kanji_use[2] / num_jlpt_kanji[2])*100)|float}}%</li>
+                <li>N1: {{'%0.2f' % ((jlpt_kanji_use[1] / num_jlpt_kanji[1])*100)|float}}%</li>
+            </ul>
+            <h2>Percent of Jōyō kanji used:</h2>
+            <ul>
+                <li>G1: {{'%0.2f' % ((joyo_kanji_use[1] / num_joyo_kanji[1])*100)|float}}%</li>
+                <li>G2: {{'%0.2f' % ((joyo_kanji_use[2] / num_joyo_kanji[2])*100)|float}}%</li>
+                <li>G3: {{'%0.2f' % ((joyo_kanji_use[3] / num_joyo_kanji[3])*100)|float}}%</li>
+                <li>G4: {{'%0.2f' % ((joyo_kanji_use[4] / num_joyo_kanji[4])*100)|float}}%</li>
+                <li>G5: {{'%0.2f' % ((joyo_kanji_use[5] / num_joyo_kanji[5])*100)|float}}%</li>
+                <li>G6: {{'%0.2f' % ((joyo_kanji_use[6] / num_joyo_kanji[6])*100)|float}}%</li>
+                <li>G7: {{'%0.2f' % ((joyo_kanji_use[7] / num_joyo_kanji[7])*100)|float}}%</li>
+            </ul>
+            <h2>Most common kanji:</h2>
+            <p>{{top_kanji}}</p>
+            <h2>Similar writing styles:</h2>
+            <p>WIP...</p>
+        </div>
+    </body>
+</html>
