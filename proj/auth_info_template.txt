@@ -1,0 +1,4 @@
+consumer_key       replace-this-with-your-consumer-key
+consumer_secret    replace-this-with-your-consumer-secret
+access_token       replace-this-with-your-access-token
+access_secret      replace-this-with-your-access-secret

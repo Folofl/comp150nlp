@@ -70,8 +70,6 @@ def webapp():
                         num_joyo_kanji[grade] += 1
 
 
-        # print(jlpt_kanji)
-
         print("Total number of unique kanji in tweets: %d" % len(kanji_dict))
         print("Total number of        kanji in JLPT:   %d" % len(jlpt_kanji))
         print("Total number of        kanji in Jōyō:   %d" % len(joyo_kanji))
@@ -119,7 +117,6 @@ def webapp():
                                num_jlpt_kanji=num_jlpt_kanji, 
                                num_joyo_kanji=num_joyo_kanji,
                                top_kanji=top_kanji)
-        # (Maybe) Highlight the kanji that can be learned on WaniKani
 
 if __name__ == "__main__":
     app.run()
