@@ -3,7 +3,9 @@
 #
 # Submitted:   December 8th, 2017
 #
-# Description: 
+# Description: Use Flask to create a webpage that takes in a Twitter handle
+#              and show what percentage of kanji of variying difficulty is 
+#              used by that account
 
 import nltk
 import sys
@@ -39,7 +41,7 @@ def webapp():
                 if kanji in kanji_dict:
                     kanji_dict[kanji] += 1
                 else:
-                    kanji_dict[kanji] = 1
+                    kanji_dict[kanji]  = 1
 
         # Uncomment to print out top 100 most common kanji
         top_kanji = sorted(kanji_dict.items(), key=operator.itemgetter(1), reverse=True)
@@ -119,4 +121,4 @@ def webapp():
                                top_kanji=top_kanji)
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)

@@ -1,6 +1,7 @@
 <html>
     <head>
         <title>NLP Final Project</title>
+        <link rel="shortcut icon" href="../static/images/favicon.ico" type="image/x-icon">
         <link href="https://fonts.googleapis.com/css?family=Gudea|Quicksand" rel="stylesheet">
         <style>
             html,body {
@@ -20,14 +21,14 @@
                 position: relative;
                 z-index: 1;
 
-                top: 15%;
+                top: 2%;
 
                 max-width: 900px;
 
                 margin:        auto;
                 margin-top:     0px;
                 margin-bottom: 20px;
-                padding: 10px;
+                padding:       10px;
 
                 background: white;
 
@@ -61,9 +62,11 @@
                 <li>G7: {{'%0.2f' % ((joyo_kanji_use[7] / num_joyo_kanji[7])*100)|float}}%</li>
             </ul>
             <h2>Most common kanji:</h2>
-            <p>{{top_kanji}}</p>
-            <h2>Similar writing styles:</h2>
-            <p>WIP...</p>
+            <p>
+            {% for kanji in top_kanji %}
+                {{ kanji[0] }}
+            {% endfor %}
+        </p>
         </div>
     </body>
 </html>
